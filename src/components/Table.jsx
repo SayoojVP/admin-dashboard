@@ -1,47 +1,48 @@
 import React from 'react'
 import './Table.css'
-import { MdDelete,MdEdit } from "react-icons/md";
-export const Table = () => {
+import { MdDelete, MdEdit } from "react-icons/md";
+
+export const Table = ({ data, onDelete, onEdit }) => {
   return (
     <div className='table-wrapper'>
       <table className='table'>
-         <thead>
-            <tr>
-               <th>ID</th>
-               <th>Name</th>
-               <th>Email</th>
-               <th>Role</th>
-               <th>Status</th>
-               <th>Joined Date</th>
-               <th>Actions</th>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Joined Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((row) => (
+            <tr key={row.id}>
+              <td>{row.id}</td>
+              <td>{row.name}</td>
+              <td>{row.email}</td>
+              <td>{row.role}</td>
+              <td>{row.status}</td>
+              <td>{row.joinedDate}</td>
+              <td>
+                <span 
+                  onClick={() => onEdit(row)} 
+                  style={{cursor: 'pointer', marginRight: '10px', color: '#007bff'}}
+                >
+                  <MdEdit />
+                </span>
+                <span 
+                  onClick={() => onDelete(row.id)} 
+                  style={{cursor: 'pointer', color: '#dc3545'}}
+                >
+                  <MdDelete />
+                </span>
+              </td>
             </tr>
-         </thead>
-         <tbody>
-            <tr>
-               <td>1000</td>
-               <td>John</td>
-               <td>john@gmail.com</td>
-               <td>SDE</td>
-               <td>Active</td>
-               <td>02/01/2022</td>
-               <td>
-                  <span><MdEdit /></span>
-                  <span><MdDelete /></span>
-               </td>
-            </tr>
-            <tr>
-               <td>2000</td>
-               <td>Raju</td>
-               <td>raju@gmail.com</td>
-               <td>Project Manager</td>
-               <td>Inactive</td>
-               <td>14/02/2022</td>
-               <td>
-                  <span><MdEdit /></span>
-                  <span><MdDelete /></span>
-               </td>
-            </tr>
-         </tbody>
+          ))}
+        </tbody>
       </table>
     </div>
   )
