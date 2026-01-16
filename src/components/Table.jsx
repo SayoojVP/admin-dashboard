@@ -24,7 +24,11 @@ export const Table = ({ data, onDelete, onEdit }) => {
               <td>{row.name}</td>
               <td>{row.email}</td>
               <td>{row.role}</td>
-              <td>{row.status}</td>
+              <td>
+                <span className={`status-badge ${row.status.toLowerCase()}`}>
+                  {row.status}
+                </span>
+              </td>
               <td>{row.joinedDate}</td>
               <td>
                 <span 
