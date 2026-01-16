@@ -23,6 +23,7 @@
 
 .table th, .table td{
    padding: 0.8rem;
+   text-align: left;
 }
 
 .table td{
