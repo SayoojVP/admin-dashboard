@@ -1,11 +1,14 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { Table } from './components/Table'
 import { Modal } from './components/Modal'
+import { Sidebar } from './components/Sidebar'
 
 function App() {
+  // Tab navigation state
+  const [activeTab, setActiveTab] = useState('users');
+  
+  // Modal states
   const [modalOpen, setModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
   
@@ -66,14 +69,48 @@ function App() {
     setModalOpen(true);
   };
 
+  // Render content based on active tab
+  const renderContent = () => {
+    switch(activeTab) {
+      case 'home':
+        return (
+          <div className='dashboard-content'>
+            <h1>Welcome to Admin Dashboard</h1>
+            <p>Select a menu item from the sidebar to get started.</p>
+          </div>
+        );
+      case 'users':
+        return (
+          <div className='dashboard-content'>
+            <div className='content-header'>
+              <h1>User Management</h1>
+              <button className='btn' onClick={openAddModal}>Add User</button>
+            </div>
+            <Table 
+              data={tableData} 
+              onDelete={deleteRow}
+              onEdit={editRow}
+            />
+          </div>
+        );
+      case 'settings':
+        return (
+          <div className='dashboard-content'>
+            <h1>Settings</h1>
+            <p>Settings page coming soon...</p>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="App">
-      <Table 
-        data={tableData} 
-        onDelete={deleteRow}
-        onEdit={editRow}
-      />
-      <button className='btn' onClick={openAddModal}>Add</button>
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <div className='main-content'>
+        {renderContent()}
+      </div>
       {modalOpen && (
         <Modal 
           closeModal={() => {
