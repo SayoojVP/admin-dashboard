@@ -8,6 +8,9 @@ function App() {
   // Tab navigation state
   const [activeTab, setActiveTab] = useState('users');
   
+  // Sidebar state
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  
   // Modal states
   const [modalOpen, setModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
@@ -69,6 +72,11 @@ function App() {
     setModalOpen(true);
   };
 
+  // Toggle sidebar
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   // Render content based on active tab
   const renderContent = () => {
     switch(activeTab) {
@@ -107,8 +115,16 @@ function App() {
 
   return (
     <div className="App">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className='main-content'>
+      <Sidebar 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab}
+        isOpen={sidebarOpen}
+        toggleSidebar={toggleSidebar}
+      />
+      <div className={`main-content ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
+        <button className='menu-toggle' onClick={toggleSidebar}>
+          {sidebarOpen ? '✕' : '☰'}
+        </button>
         {renderContent()}
       </div>
       {modalOpen && (
